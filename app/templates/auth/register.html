@@ -4,11 +4,55 @@
 
 
 {% block content %}
-    <form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Register">
+<div class="container-bg-light p-3">
+    <form>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="validationServer01">Nome Completo</label>
+                <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Nome Completo" required>
+                <div class="valid-feedback">
+                    Tudo certo!
+                </div>
+                <div class="invalid-feedback">
+                    Por favor, Digite seu nome (sem caracteres especiais).
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationServer02">Data de Nascimento</label>
+                <input type="date" class="form-control is-valid" id="validationServer02" placeholder="01/01/1900" required>
+                <div class="valid-feedback">
+                    Tudo certo!
+                </div>
+            </div>
+            <div class="col-md-8 mb-3">
+                <label for="validationServerUsername">E-mail</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                    </div>
+                    <input type="email" class="form-control is-invalid" id="validationServerUsername" placeholder="exemplo@mail.com" aria-describedby="inputGroupPrepend3" required>
+                    <div class="invalid-feedback">
+                        Por favor, digite um e-mail valido.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="validationServer01">Senha</label>
+                <input type="password" class="form-control is-valid" id="validationServer01" placeholder="**********" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
+                <label class="form-check-label" for="invalidCheck3">
+                    Concordo com os termos e condições
+                </label>
+                <div class="invalid-feedback">
+                    Você deve concordar, antes de continuar.
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Enviar</button>
     </form>
+</div>
 {% endblock %}
