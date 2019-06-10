@@ -1,0 +1,49 @@
+
+
+.board{
+    background-color: white;
+    border-radius: 0.3em;
+}
+.board input{
+    border: none;
+    font-weight: bold;
+}
+.board input:disabled{
+    background-color: white;
+}
+.board .board-title{
+    padding: 0.2em;
+    border: none;
+    font-weight: bold;
+}
+.card{
+    background-color: #FEEEFF;
+    border-radius: 0.3em;
+}
+.card input{
+    padding: 0.2em;
+    border: none;
+    background-color: #FEEEFF;
+    font-weight: bold;
+}
+.card input:disabled{
+    background-color: #FEEEFF;
+}
+.card .card-title{
+    width: 100%;
+    padding: 0.2em;
+    font-weight: bold;
+}
+.card .card-buttons{
+    width: 100%;
+    text-align: right;
+}
+.card .card-buttons img{
+    width: 1.3em;
+    margin-right: 0.5em;
+}
+
+.input-group-bg{
+    background-color: white;
+    border: 1px solid #ced4da;
+}
