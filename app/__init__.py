@@ -7,12 +7,9 @@ from flask_session import Session
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
+app.secret_key = '2345678_tanahorademolharobiscoito'
 
 db = SQLAlchemy(app)
-
-sess = Session()
-sess.init_app(app)
-
 
 from app import auth
 from app import taskboard
