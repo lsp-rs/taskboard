@@ -1,6 +1,8 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
+from app.controllers.UserController import UserController
+usr_ctrl = UserController()
 
 
 bp = Blueprint('auth', __name__)
@@ -11,41 +13,32 @@ def register():
         if session['login']:
             return redirect(url_for('taskboard.home'))
     try:
-        from app.controllers.UserController import UserController
-        _usrCrtl = UserController()
 
         if request.method == 'POST':
-            data = {
+            data_register = {
                 'name' : request.form['name'],
                 'birthday' : request.form['birthday'],
                 'email' : request.form['email'],
-                'password' : request.form['senha'],
+                'password' : request.form['password'],
                 'status' : 'ativo'
             }
-            if _usrCrtl.signUp(data):
-                session['login'] = True
+            if usr_ctrl.signUp(data_register):
                 return redirect(url_for('taskboard.home'))
     except Exception as e:
-        print(f'ERRPR: {e}')
+        print(f'ERROR(register-view): {e}')
     return render_template('auth/register.html')
 
 
 @bp.route('/', methods=('GET', 'POST'))
 def login():
-    session['login'] = False
     try:
-        from app.controllers.UserController import UserController as usrCrtl
-
         if request.method == 'POST':
-            data = {
+            data_login = {
                 'email' : request.form['email'],
-                'password' : request.form['senha']
+                'password' : request.form['password']
             }
-            if usrCrtl.signIn(data):
-                session['login'] = True
+            if usr_ctrl.signIn(data_login):
                 return redirect(url_for('taskboard.home'))
-            message = "Login ou senha incorretos!"
-            return render_template('auth/login.html', message = message)
-        return render_template('auth/login.html')
     except Exception as e:
-        return render_template('auth/login.html', error = e)
+        print(f'ERROR(login-view): {e}')
+    return render_template('auth/login.html')
