@@ -1,5 +1,6 @@
+from app.models.CardModel import Card
+from datetime import datetime
 from app import db
-from sqlalchemy import DateTime
 
 
 class Annex(db.Model):
@@ -9,8 +10,9 @@ class Annex(db.Model):
     name = db.Column(db.String(60), nullable = False)
     annex = db.Column(db.LargeBinary, nullable = False)
     type_archive = db.Column(db.String(45), nullable = False)
-    created = db.Column(db.Date, nullable = False)
-    modified = db.Column(db.Date, nullable = True)
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), nullable=False)
+    created = db.Column(db.Date, nullable = False, default=datetime.utcnow)
+    modified = db.Column(db.Date, nullable = True, default=datetime.utcnow)
 
     def __init__(self, name, annex, type_archive, created, modified):
         self.name = name

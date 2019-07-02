@@ -8,5 +8,9 @@ bp = Blueprint('taskboard', __name__, url_prefix='/taskboard')
 @bp.route('/home')
 def home():
     if 'user' in session:
-        print(session['user'])
-    return render_template('taskboard/home.html')
+        if session['user']:
+            from app.controllers.BoardController import BoardController
+            _brd = BoardController()
+            boards = _brd.listBoards(session['user']['id'])
+            return render_template('taskboard/home.html', boards = boards)
+    return redirect(url_for('auth.logout'))

@@ -9,11 +9,8 @@ bp = Blueprint('auth', __name__)
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
-    if 'login' in session:
-        if session['login']:
-            return redirect(url_for('taskboard.home'))
     try:
-
+        usr_ctrl.loginExist()
         if request.method == 'POST':
             data_register = {
                 'name' : request.form['name'],
@@ -32,13 +29,21 @@ def register():
 @bp.route('/', methods=('GET', 'POST'))
 def login():
     try:
+        usr_ctrl.loginExist()
         if request.method == 'POST':
             data_login = {
                 'email' : request.form['email'],
                 'password' : request.form['password']
             }
-            if usr_ctrl.signIn(data_login):
+            usr_ctrl.signIn(data_login)
+            if session['login']:
                 return redirect(url_for('taskboard.home'))
     except Exception as e:
         print(f'ERROR(login-view): {e}')
+
     return render_template('auth/login.html')
+
+@bp.route('/logout')
+def logout():
+    usr_ctrl.singOut()
+    return redirect(url_for('auth.login'))

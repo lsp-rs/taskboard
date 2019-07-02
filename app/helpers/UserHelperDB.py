@@ -46,7 +46,7 @@ class UserDao():
 
     def singInUser(self, data):
         try:
-            user_result = User.query.filter(
+            count = User.query.filter(
                 and_(
                     User.email == data['email'],
                     User.password == data['password']
@@ -55,11 +55,12 @@ class UserDao():
         except Exception as e:
             print(f'ERROR IN HELPER: {e}')
             return False
-        return user_result
+        return count
 
     def userData(self, data):
         try:
             user_result = User.query.with_entities(
+                User.id,
                 User.name,
                 User.birthday,
                 User.status,

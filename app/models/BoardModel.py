@@ -1,5 +1,6 @@
+from app.models.UserModel import User
+from datetime import datetime
 from app import db
-from sqlalchemy import DateTime
 
 
 class Board(db.Model):
@@ -8,11 +9,11 @@ class Board(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(60), nullable = False)
     order = db.Column(db.Integer, nullable = False)
-    created = db.Column(db.Date, nullable = False)
-    modified = db.Column(db.Date, nullable = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    created = db.Column(db.Date, nullable = False, default=datetime.utcnow)
+    modified = db.Column(db.Date, nullable = True, default=datetime.utcnow)
 
-    def __init__(self, title, order, created, modified):
+    def __init__(self, title, order, user_id):
         self.title = title
         self.order = order
-        self.created = created
-        self.modified = modified
+        self.user_id = user_id

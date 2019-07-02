@@ -27,12 +27,25 @@
 				<img src="{{ url_for('static', filename='image/logo.png') }}" width="30" height="30" class="d-inline-block align-top"alt="logo">
 				TaskBoard
 			</a>
-		</nav>
+			{% if session['login'] %}
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto text-right my-3">
+					<li class="nav-item">
+						<a class="btn btn-danger" href="{{ url_for('auth.logout') }}">sair</a>
+					</li>
+				</ul>
+			</div>
+			{% endif %}
+			</nav>
 		
 		<div class="container p-5">
 			{% block content %}{% endblock %}
 		</div>
-		<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 	</body>
 </html>
