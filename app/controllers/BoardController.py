@@ -23,3 +23,11 @@ class BoardController():
             print(f'ERROR IN CONTROLLER(signUp): {e}')
             return False
         return boards
+    
+    def insertBoard(sef, data):
+        try:
+            print(data)
+        except Exception as e:
+            print(e)
+            return False
+        return True

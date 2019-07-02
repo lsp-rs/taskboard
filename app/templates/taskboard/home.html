@@ -47,6 +47,7 @@
             {% endfor %}
 
             <div class="col-md-12 col-lg-3 bg-black board pb-2 pt-2 pl-3 pr-3 m-1">
+                <form action="{{url_for('taskboard.addBoard')}}" method="POST">
                     <div class="input-group">
                         <input type="text" class="form-control" name="title_board" placeholder="Titulo do Board">
                         <div class="input-group-append">
@@ -80,7 +81,9 @@
                             <img src="{{url_for('static', filename='image/imagem.png')}}" alt="imagem">
                         </div>
                     </div>
-                </div>
+                    <input type="submit" hidden>
+                </form>
+            </div>
 
 
 
