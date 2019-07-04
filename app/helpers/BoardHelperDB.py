@@ -26,16 +26,18 @@ class BoardDao():
         try:
 
             board_result = Board.query.with_entities(
+                Board.id,
                 Board.title,
+                Card.id,
                 Card.title,
                 Card.description,
                 Annex.name,
                 List.list_items
-            ).join(
+            ).outerjoin(
                 Card, Card.board_id == Board.id
-            ).join(
+            ).outerjoin(
                 Annex, Annex.card_id == Card.id
-            ).join(
+            ).outerjoin(
                 List, List.card_id == Card.id
             ).filter(
                 Board.user_id == data

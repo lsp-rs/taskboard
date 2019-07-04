@@ -4,55 +4,107 @@
 
 
 {% block content %}
-<div class="container-bg-light p-3">
-    <form method="POST" action="{{ url_for('auth.register') }}">
+<div class="container-bg-light p-5">
+    <h3>Cadastro de Usuário:</h3>
+    <p>Cadastre-se no mais novo sistema de notas, pratico e rápido. Nunca mais fique na anotação na mão, basta cadastrar-se, ele totalmente gratuito! Aproveite!!!</p>
+    <form method="POST" id="formBoard" action="{{url_for('auth.register')}}">
         <div class="form-row">
             <div class="col-md-6 mb-3">
-                <label for="validationServer01">Nome Completo</label>
-                <input type="text" name="name" class="form-control is-valid" id="validationServer01" placeholder="Nome Completo" required>
-                <div class="valid-feedback">
-                    Tudo certo!
-                </div>
-                <div class="invalid-feedback">
-                    Por favor, Digite seu nome (sem caracteres especiais).
-                </div>
+                <label for="name">Nome Completo</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Nome Completo" required>
             </div>
+        </div>
+        <div class="form-row">
             <div class="col-md-3 mb-3">
-                <label for="validationServer02">Data de Nascimento</label>
-                <input type="date" name="birthday" class="form-control is-valid" id="validationServer02" placeholder="01/01/1900" required>
-                <div class="valid-feedback">
-                    Tudo certo!
-                </div>
+                <label for="birthday">Data de Nascimento</label>
+                <input type="date" name="birthday" class="form-control" id="birthday" placeholder="01/01/1900" required>
             </div>
+        </div>
+        <div class="form-row">
             <div class="col-md-8 mb-3">
-                <label for="validationServerUsername">E-mail</label>
+                <label for="email">E-mail</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text input-group-bg" id="inputGroupPrepend3">@</span>
                     </div>
-                    <input type="email" name="email" class="form-control is-invalid" id="validationServerUsername" placeholder="exemplo@mail.com" aria-describedby="inputGroupPrepend3" required>
-                    <div class="invalid-feedback">
-                        Por favor, digite um e-mail valido.
-                    </div>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="exemplo@mail.com" aria-describedby="inputGroupPrepend3" required>
                 </div>
             </div>
-            <div class="col-md-6 mb-3">
-                <label for="validationServer01">Senha</label>
-                <input type="password" name="password" class="form-control is-valid" id="validationServer01" placeholder="**********" required>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label for="password">Senha</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="**********" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="checkpass">Confirme sua Senha</label>
+                <input type="password" name="checkpass" class="form-control" id="checkpass" placeholder="**********" required>
             </div>
         </div>
         <div class="form-group">
             <div class="form-check">
-                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
-                <label class="form-check-label" for="invalidCheck3">
+                <input class="form-check-input" type="checkbox" name="termos" value="True" id="termos" required>
+                <label class="form-check-label" for="termos">
                     Concordo com os termos e condições
                 </label>
-                <div class="invalid-feedback">
-                    Você deve concordar, antes de continuar.
-                </div>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Enviar</button>
+        <button name="btnSub" class="btn btn-primary" form="formBoard" type="button">Enviar</button>
     </form>
 </div>
+
+<script>
+    /*
+    class validation:
+    is-valid
+    is-invalid
+    */
+    var formBoard = document.getElementById("formBoard");
+    formBoard.btnSub.addEventListener('click', function(e) {
+        var flag_error = false;
+        if(formBoard.name.value && formBoard.name.value.length >= 8){
+            formBoard.name.classList.remove("is-invalid");
+            formBoard.name.classList.add("is-valid");
+        }else{
+            flag_error = true;
+            formBoard.name.classList.add("is-invalid");
+        }
+        if(formBoard.birthday.value){
+            formBoard.birthday.classList.remove("is-invalid");
+            formBoard.birthday.classList.add("is-valid");
+        }else{
+            flag_error = true;
+            formBoard.birthday.classList.add("is-invalid");
+        }
+        email_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if(email_regex.test(formBoard.email.value)){
+            formBoard.email.classList.remove("is-invalid");
+            formBoard.email.classList.add("is-valid");
+        }else{
+            flag_error = true;
+            formBoard.email.classList.add("is-invalid");
+        }
+        if(formBoard.password.value && formBoard.password.value.length >= 8){
+            formBoard.password.classList.remove("is-invalid");
+            formBoard.password.classList.add("is-valid");
+        }else{
+            flag_error = true;
+            formBoard.password.classList.add("is-invalid");
+        }
+        if(formBoard.checkpass.value == formBoard.password.value && formBoard.password.value.length >= 8){
+            formBoard.checkpass.classList.remove("is-invalid");
+            formBoard.checkpass.classList.add("is-valid");
+        }else{
+            flag_error = true;
+            formBoard.checkpass.classList.add("is-invalid");
+        }
+        if(flag_error == true){
+        alert("ERROOOOO!");
+        }else{
+            formBoard.submit();
+        }
+    });
+    
+</script>
+
 {% endblock %}

@@ -11,22 +11,10 @@ class UserController():
         except Exception as e:
             print(f'ERROR IN CONTROLLER(signUp): {e}')
             return False
-        session['login'] = True
-        
-        session['user'] = {
-            'name': data['name'],
-            'email': data['email'],
-            'birthday': data['birthday'],
-            'status': data['status'],
-            'created': datetime.utcnow(),
-        }
-        session['name'] = data['name']
-        session['email'] = data['email']
         return True
 
     def signIn(self, data):
         try:
-            print(f'count? {self._usr.singInUser(data)}')
             if self._usr.singInUser(data) == 1:
                 usr_data = self._usr.userData(data)
                 session['user'] = {
@@ -44,13 +32,6 @@ class UserController():
             return False
         return True
 
-    def loginExist(self):
-        if 'login' in session:
-            if session['login']:
-                return redirect(url_for('taskboard.home'))
-
     def singOut(self):
         if 'login' in session:
-            if session['login']:
-                session.clear()
-                session['login'] = False
+            session.clear()
