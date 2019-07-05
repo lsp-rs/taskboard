@@ -6,7 +6,90 @@
 <div class="row text-dark">
     <div class="col-md-12 col-lg-12">
         <div class="row">
+            {% for board in boards %}
             <div class="col-md-12 col-lg-3 bg-black board pb-2 pt-2 pl-3 pr-3 m-1">
+                <form action="{{url_for('taskboard.updateBoard')}}" method="POST">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="title_board" value="{{ board['title_board'] }}">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon1">
+                            ...
+                        </span>
+                    </div>
+                </div>
+                </form>
+                <hr class="m-2">
+                {% for card in board.cards %}
+                <div class="col-md-12 col-lg-12 bg-black card pb-1 pt-1 m-1">
+                    {% if card['id_card'] %}
+                        <form action="{{url_for('taskboard.updateCard')}}" method="POST">
+                            <div class="input-group mb-1">
+                                <input type="text" class="form-control" name="title_card" value="{{card['title_card']}}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        ...
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    {% else %}
+                    <form action="{{url_for('taskboard.addCard')}}" method="POST">
+                        <div class="input-group mb-1">
+                            <input type="text" class="form-control" name="title_card" placeholder="Novo Card">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon1">
+                                    ...
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                    <div class="form-group">
+                    {% if card['desc_card'] %}
+                        <textarea class="form-control" name="desc_card">{{ card['desc_card'] }}</textarea>
+                    {%else%}
+                        <textarea class="form-control" name="desc_card"></textarea>
+                    {% endif %}
+                    </div>
+                    {% if card['items_list'] %}
+                    <div class="col-12 mb-1">
+                        {{ card['items_list'] }}
+                    </div>
+                    {% endif %}
+                    {% if card['name_annex']: %}
+                    <div class="col-12 mb-1">
+                        <a class="text-primary" href=''>{{card['name_annex']}}</a> <a class="text-danger" href="">[X]</a>
+                    </div>
+                    {% endif %}
+                    <div class="card-buttons mt-2">
+                        <img src="{{url_for('static', filename='image/lista.png')}}" alt="lista">
+                        <img src="{{url_for('static', filename='image/anexo.png')}}" alt="anexo">
+                        <img src="{{url_for('static', filename='image/imagem.png')}}" alt="imagem">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% endfor %}
+
+            <div class="col-md-12 col-lg-3 bg-black board pb-2 pt-2 pl-3 pr-3 m-1">
+                <form action="{{url_for('taskboard.addBoard')}}" method="POST">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="title_board" placeholder="Titulo do Board">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon1">
+                                ...
+                            </span>
+                        </div>
+                    </div>
+                    <input type="submit" hidden>
+                </form>
+                <hr class="m-2">
+            </div>
+
+
+
+            <!-- <div class="col-md-12 col-lg-3 bg-black board pb-2 pt-2 pl-3 pr-3 m-1">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Novo Board">
                     <div class="input-group-append">
@@ -32,6 +115,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-12 col-lg-3 bg-black board pb-2 pt-2 pl-3 pr-3 m-1">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Novo Board" value="Titulo Board" disabled>
@@ -56,7 +140,7 @@
                         Curabitur sed sapien quis urna euismod egestas vel at ex.
                     </div>
                     <div class="card-list">
-                        
+                    
                     </div>
                     <div class="card-buttons mt-2">
                         <img src="{{url_for('static', filename='image/lista.png')}}" alt="lista">
@@ -112,7 +196,7 @@
                         <img src="{{url_for('static', filename='image/imagem.png')}}" alt="imagem">
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -5,21 +5,20 @@ from datetime import datetime as dtt
 class CardDao():
 
     _crd = CardCard()
-
     def insertCard(self, data):
         try:
-            _crd.session.add(data)
-            _crd.session.commit()
-            return "Success!"
+            new_card = Card(
+                data['title'],
+                data['description'],
+                1,
+                data['board_id']
+            )
+            db.session.add(new_board)
+            db.session.commit()
         except Exception as e:
-            return 
-
-    def ordenation(self, neworder):
-        try:
-            card_update = _crd.query.filter_by(id = data['id'])
-            card_update.order = neworder
-        except Exception as e:
-            return e
+            print(f'ERROR IN HELPER(insertCard): {e}')
+            return False
+        return True
 
     def updateCard(self, data):
         try:
@@ -28,13 +27,7 @@ class CardDao():
             card_update.title =  data['description']
             card_update.modified = dtt.utcnow()
             card_update.session.commit()
-            return "Success!"
         except Exception as e:
-            return e
-    
-    def selectCard(self):
-        try:
-            card_result = _crd.query.all()
-            return card_result
-        except Exception as e:
-            return e
+            print(f'ERROR IN HELPER(updateCard): {e}')
+            return False
+        return True

@@ -1,24 +1,52 @@
 from app.models.BoardModel import Board
+from app.models.CardModel import Card
+from app.models.AnnexModel import Annex
+from app.models.ListModel import List
 from datetime import datetime as dtt
+from flask import session, redirect, render_template, url_for
 
 
 class BoardDao():
-    _brd = Board()
-
+    
     def insertBoard(self, data):
         try:
-            _brd.session.add(data)
-            _brd.session.commit()
-            return "Success!"
+            new_board = Board(
+                data['title'],
+                1,
+                session['user']['id']
+            )
+            db.session.add(new_board)
+            db.session.commit()
         except Exception as e:
-            return 
-
-    def ordenation(self, neworder):
+            print(f'ERROR IN HELPER(insertBoard): {e}')
+            return False
+        return True
+    
+    def selectBoard(self, data):
         try:
-            board_update = _brd.query.filter_by(id = data['id'])
-            board_update.order = neworder
+
+            board_result = Board.query.with_entities(
+                Board.id,
+                Board.title,
+                Card.id,
+                Card.title,
+                Card.description,
+                Annex.name,
+                List.list_items
+            ).outerjoin(
+                Card, Card.board_id == Board.id
+            ).outerjoin(
+                Annex, Annex.card_id == Card.id
+            ).outerjoin(
+                List, List.card_id == Card.id
+            ).filter(
+                Board.user_id == data
+            ).all()
+
         except Exception as e:
-            return e
+            print(f'ERROR IN HELPER(selectBoard): {e}')
+            return False
+        return board_result
 
     def updateBoard(self, data):
         try:
@@ -26,13 +54,7 @@ class BoardDao():
             board_update.title =  data['title']
             board_update.modified = dtt.utcnow()
             board_update.session.commit()
-            return "Success!"
         except Exception as e:
-            return e
-    
-    def selectBoard(self):
-        try:
-            board_result = _brd.query.all()
-            return board_result
-        except Exception as e:
-            return e
+            print(f'ERROR IN HELPER(updateBoard): {e}')
+            return False
+        return True
