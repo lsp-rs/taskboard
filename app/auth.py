@@ -41,6 +41,8 @@ def logout():
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
+    if 'login' in session.keys():
+        return redirect(url_for('taskboard.home'))
     try:
         if request.method == 'POST':
             data_register = {

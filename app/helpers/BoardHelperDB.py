@@ -1,4 +1,4 @@
-from app.models.BoardModel import Board
+from app.models.BoardModel import Board, db
 from app.models.CardModel import Card
 from app.models.AnnexModel import Annex
 from app.models.ListModel import List
@@ -11,7 +11,7 @@ class BoardDao():
     def insertBoard(self, data):
         try:
             new_board = Board(
-                data['title'],
+                data['title_board'],
                 1,
                 session['user']['id']
             )
@@ -50,10 +50,10 @@ class BoardDao():
 
     def updateBoard(self, data):
         try:
-            board_update = _brd.query.filter_by(id = data['id'])
-            board_update.title =  data['title']
+            board_update = Board.query.filter(Board.id == data['id_board']).first()
+            board_update.title =  data['title_board']
             board_update.modified = dtt.utcnow()
-            board_update.session.commit()
+            db.session.commit()
         except Exception as e:
             print(f'ERROR IN HELPER(updateBoard): {e}')
             return False
