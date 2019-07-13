@@ -65,3 +65,15 @@ def updateCard():
     if _crd.updateCard(data):
         message = "Card alterado com sucesso!"
     return redirect(url_for('taskboard.home'))
+
+@bp.route('/deleteCard/<int:id_card>')
+@login_required
+def deleteCard(id_card):
+    data = {
+        'id': id_card,
+        'confirma': 1
+    }
+
+    if _crd.deleteCard(data):
+        message = "Card deletado com sucesso!"
+    return redirect(url_for('taskboard.home'))

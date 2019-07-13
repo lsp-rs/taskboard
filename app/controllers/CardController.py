@@ -14,6 +14,15 @@ class CardController():
             return False
         return True
 
+    def deleteCard(self, data):
+        try:
+            if 'id' in data:
+                self._crd.deleteCard(data)
+        except Exception as e:
+            print(e)
+            return False
+        return True
+
     def updateCard(self, data):
         try:
             if 'title_card' in data:

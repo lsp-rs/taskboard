@@ -30,3 +30,11 @@ class CardDao():
             print(f'ERROR IN HELPER(updateCard): {e}')
             return False
         return True
+
+    def deleteCard(self, data):
+        try:
+            card_delete = Card.query.filter(Card.id == data['id']).first()
+            db.session.delete(card_delete)
+            db.session.commit()
+        except Exception as e:
+            print(f'ERROR IN HELPER(deleteCard): {e}')
