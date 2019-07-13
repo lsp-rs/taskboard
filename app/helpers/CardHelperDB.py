@@ -1,19 +1,18 @@
-from app.models.CardModel import Card
+from app.models.CardModel import Card, db
 from datetime import datetime as dtt
 
 
 class CardDao():
 
-    _crd = CardCard()
     def insertCard(self, data):
         try:
             new_card = Card(
-                data['title'],
-                data['description'],
+                data['title_card'],
+                data['desc_card'],
                 1,
-                data['board_id']
+                data['id_board_card']
             )
-            db.session.add(new_board)
+            db.session.add(new_card)
             db.session.commit()
         except Exception as e:
             print(f'ERROR IN HELPER(insertCard): {e}')
@@ -22,12 +21,20 @@ class CardDao():
 
     def updateCard(self, data):
         try:
-            card_update = _crd.query.filter_by(id = data['id'])
-            card_update.title =  data['title']
-            card_update.title =  data['description']
+            card_update = Card.query.filter(Card.id == data['id_card']).first()
+            card_update.title =  data['title_card']
+            card_update.description =  data['desc_card']
             card_update.modified = dtt.utcnow()
-            card_update.session.commit()
+            db.session.commit()
         except Exception as e:
             print(f'ERROR IN HELPER(updateCard): {e}')
             return False
         return True
+
+    def deleteCard(self, data):
+        try:
+            card_delete = Card.query.filter(Card.id == data['id']).first()
+            db.session.delete(card_delete)
+            db.session.commit()
+        except Exception as e:
+            print(f'ERROR IN HELPER(deleteCard): {e}')

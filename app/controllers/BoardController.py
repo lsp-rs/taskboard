@@ -43,10 +43,27 @@ class BoardController():
             return False
         return list_board
     
-    def insertBoard(sef, data):
+    def insertBoard(self, data):
         try:
-            print(data)
+            if 'title_board' in data:
+                self._brd.insertBoard(data)
         except Exception as e:
             print(e)
             return False
+        return True
+
+    def updateBoard(self, data):
+        try:
+            if 'title_board' in data:
+                self._brd.updateBoard(data)
+        except Exception as e:
+            print(e)
+        return True
+
+    def deleteBoard(self, data):
+        try:
+            if 'id_board' in data:
+                self._brd.updateBoard(data['id_board'])
+        except Exception as e:
+            print(e)
         return True

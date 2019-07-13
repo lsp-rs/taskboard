@@ -22,13 +22,13 @@ class UserDao():
 
     def updateUser(self, data):
         try:
-            user_update = self._usr.query.filter_by(id = data['id'])
+            user_update = User.query.filter(User.id == data['id']).first()
             user_update.name =  data['name']
             user_update.birthday =  data['birthday']
             user_update.email =  data['email']
             user_update.name =  data['status']
             user_update.modified = dtt.utcnow()
-            user_update.session.commit()
+            db.session.commit()
         except Exception as e:
             print(f'ERROR IN HELPER: {e}')
             return False
